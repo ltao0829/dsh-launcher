@@ -1,32 +1,32 @@
 # dsh-launcher
 
-DeepSeek Harness（DSH）Web 界面的一键启动脚本：双击即可启动 `dsh web` 并自动打开浏览器。
+One-click launcher for the DeepSeek Harness (DSH) web UI: double-click to start `dsh web` and open the browser automatically.
 
-## 用法
+## Usage
 
-- 双击 `start-harness.bat`，默认端口 `3080`
-- 命令行指定端口：`start-harness.bat 8080`
-- 关闭弹出的 "DSH Web Server" 窗口即停止服务
+- Double-click `start-harness.bat` — uses the default port `3080`
+- Specify a port from the command line: `start-harness.bat 8080`
+- Close the "DSH Web Server" window to stop the service
 
-## 工作原理
+## How it works
 
-脚本按以下顺序自动定位 `dsh` 命令（无需手动配置路径）：
+The script locates the `dsh` command automatically (no manual path configuration needed):
 
-1. PATH 中的 `dsh.cmd`（全局安装）
-2. `%APPDATA%\npm\dsh.cmd`（npm 默认全局前缀）
-3. 任意 npx 缓存目录 `%LOCALAPPDATA%\npm-cache\_npx\*\node_modules\.bin\dsh.cmd`
+1. `dsh.cmd` on PATH (global install)
+2. `%APPDATA%\npm\dsh.cmd` (npm default global prefix)
+3. Any npx cache directory: `%LOCALAPPDATA%\npm-cache\_npx\*\node_modules\.bin\dsh.cmd`
 4. `%USERPROFILE%\.npm-global\bin\dsh.cmd`
-5. 兜底使用 `npx`（首次运行会自动联网安装 dsh）
+5. Falls back to `npx` (installs dsh on first run)
 
-若端口已在监听，脚本会直接打开浏览器而不重复启动。
+If the port is already listening, the script opens the browser without starting a second server.
 
-## 环境要求
+## Requirements
 
 - Windows
-- Node.js（含 npm/npx）：<https://nodejs.org>
-- 可选：全局安装 DeepSeek Harness —— `npm install -g @deepseek-ai/dsh`
+- Node.js (with npm/npx): <https://nodejs.org>
+- Optional: global DeepSeek Harness install — `npm install -g @deepseek-ai/dsh`
 
-## 说明
+## Notes
 
-- 脚本只负责「启动服务 + 打开浏览器」；DSH 的插件（如 web-ui 全家桶）需要在各自电脑上另行配置 profile。
-- 已在 Windows 上验证通过。
+- The script only handles "start the server + open the browser"; DSH plugins (e.g. the web-ui bundle) must be configured per machine via their own profiles.
+- Verified on Windows.
