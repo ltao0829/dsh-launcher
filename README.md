@@ -1,32 +1,61 @@
 # dsh-launcher
 
-DeepSeek Harness（DSH）Web 界面的一键启动脚本：双击即可启动 `dsh web` 并自动打开浏览器。
+**One-click DeepSeek Harness Web launcher — part of a small suite of tooling for AI coding-agent workflows.**
 
-## 用法
+[![CI](https://github.com/ltao0829/dsh-launcher/actions/workflows/ci.yml/badge.svg)](https://github.com/ltao0829/dsh-launcher/actions/workflows/ci.yml)
+[![License: BSD-3-Clause](https://img.shields.io/badge/License-BSD--3--Clause-blue.svg)](./LICENSE)
 
-- 双击 `start-harness.bat`，默认端口 `3080`
-- 命令行指定端口：`start-harness.bat 8080`
-- 关闭弹出的 "DSH Web Server" 窗口即停止服务
+Start DeepSeek Harness (DSH) Web and open the browser with a single double-click. `dsh-launcher` locates your `dsh` installation automatically, so there is no PATH setup and no command to remember.
 
-## 工作原理
+> Part of the `@ltao0829` AI coding-agent tooling suite, alongside [dsh-task-notify](https://github.com/ltao0829/dsh-task-notify) — a lifecycle notification layer for coding agents.
 
-脚本按以下顺序自动定位 `dsh` 命令（无需手动配置路径）：
+## Why this exists
 
-1. PATH 中的 `dsh.cmd`（全局安装）
-2. `%APPDATA%\npm\dsh.cmd`（npm 默认全局前缀）
-3. 任意 npx 缓存目录 `%LOCALAPPDATA%\npm-cache\_npx\*\node_modules\.bin\dsh.cmd`
+DSH Web is a server you normally start from a terminal. For everyday use, a double-clickable launcher removes that friction: it finds the right `dsh` binary, starts the server, waits for the port, and opens the browser — and reuses an already-running server instead of starting a second one.
+
+## Usage
+
+- Double-click `start-harness.bat` → starts on the default port `3080` and opens the browser.
+- Custom port (from a terminal): `start-harness.bat 8080`
+- Stop the server by closing the "DSH Web Server" window.
+
+## How it works
+
+The script locates the `dsh` command automatically, in this order:
+
+1. `dsh.cmd` on `PATH` (global install)
+2. `%APPDATA%\npm\dsh.cmd` (npm's default global prefix)
+3. any npx cache directory `%LOCALAPPDATA%\npm-cache\_npx\*\node_modules\.bin\dsh.cmd`
 4. `%USERPROFILE%\.npm-global\bin\dsh.cmd`
-5. 兜底使用 `npx`（首次运行会自动联网安装 dsh）
+5. falls back to `npx` (auto-installs dsh on first run)
 
-若端口已在监听，脚本会直接打开浏览器而不重复启动。
+If the port is already listening, the script opens the browser instead of starting a duplicate server.
 
-## 环境要求
+## Requirements
 
 - Windows
-- Node.js（含 npm/npx）：<https://nodejs.org>
-- 可选：全局安装 DeepSeek Harness —— `npm install -g @deepseek-ai/dsh`
+- Node.js (with npm/npx): <https://nodejs.org>
+- Optional: a global DeepSeek Harness install — `npm install -g @deepseek-ai/dsh`
 
-## 说明
+## Development
 
-- 脚本只负责「启动服务 + 打开浏览器」；DSH 的插件（如 web-ui 全家桶）需要在各自电脑上另行配置 profile。
-- 已在 Windows 上验证通过。
+```sh
+node scripts/check-launcher.cjs
+```
+
+Validates package metadata, documentation, and the batch script (including CRLF line endings).
+
+## Roadmap
+
+- [x] One-click launcher with automatic `dsh` detection
+- [x] Port detection and reuse
+- [ ] Cross-platform launcher (macOS / Linux)
+- [ ] Desktop shortcut installer
+
+## Related projects
+
+- [dsh-task-notify](https://github.com/ltao0829/dsh-task-notify) — lifecycle notification layer for AI coding agents (DeepSeek Harness plugin).
+
+## License
+
+[BSD-3-Clause](./LICENSE)

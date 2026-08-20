@@ -1,0 +1,15 @@
+{
+  "name": "@ltao0829/dsh-launcher",
+  "version": "0.1.0",
+  "description": "One-click DeepSeek Harness Web launcher for Windows",
+  "license": "BSD-3-Clause",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node scripts/check-launcher.cjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ltao0829/dsh-launcher.git"
+  }
+}
